@@ -1,5 +1,5 @@
+require "stardust_rails/reports/engine" 
 require_relative "reports/helpers"
-require_relative "reports/report"
 
 module StardustRails
   module Reports

@@ -112,3 +112,4 @@ end
 
 
 require_relative "filter"
+require_relative "field"

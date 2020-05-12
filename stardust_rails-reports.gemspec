@@ -13,13 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/parablesoft/stardust_rails-reports"
   spec.license       = "MIT"
 
-  spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  end
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
-
+  spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   spec.add_dependency "rails", ">= 5.0.2"
   spec.add_dependency "stardust_rails"
   spec.add_dependency "pg"
