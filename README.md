@@ -1,43 +1,56 @@
-# StardustRails::Reports
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stardust_rails/reports`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
-Add this line to your application's Gemfile:
+Add the folowing line to your Gemfile
 
 ```ruby
 gem 'stardust_rails-reports'
 ```
 
-And then execute:
 
-    $ bundle
+Create reports table in the database
 
-Or install it yourself as:
+```sh
+rake db:migrate
+```
 
-    $ gem install stardust_rails-reports
 
-## Usage
+#Pass an array of roles that are permitted to manage the hooks
+Stardust::Hooks.configure do |config|
+  config.manager_roles = []
+end
 
-TODO: Write usage instructions here
+### GraphQL
 
-## Development
+#### Mutations
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Create `stardust_rails_reports.rb` in the `app/graph/mutations` directory.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+It should have the following content:
 
-## Contributing
+```ruby
+load 'stardust_rails/reports/graph/mutations.rb'
+```
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/stardust_rails-reports. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+#### Queries
+Create `stardust_rails_reports.rb` in the `app/graph/queries` directory.
 
-## License
+It should have the following content:
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+```ruby
+load 'stardust_rails/reports/graph/queries.rb'
+```
 
-## Code of Conduct
+#### Types
 
-Everyone interacting in the StardustRails::Reports project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/stardust_rails-reports/blob/master/CODE_OF_CONDUCT.md).
+Create `stardust_rails_reports.rb` in the `app/graph/types` directory.
+
+It should have the following content:
+
+```ruby
+load 'stardust_rails/reports/graph/types.rb'
+```
+
+
+### Report Authoring
+
+To be written...

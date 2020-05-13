@@ -1,3 +1,6 @@
+require_relative "filter"
+require_relative "field"
+
 module StardustRails
   module Reports
     class Dsl
@@ -111,5 +114,3 @@ end
 
 
 
-require_relative "filter"
-require_relative "field"

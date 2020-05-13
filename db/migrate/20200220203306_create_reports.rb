@@ -1,4 +1,4 @@
-class CreateReports < ActiveRecord::Migration[5.2]
+class CreateReports < ActiveRecord::Migration[5.0]
   def change
     unless table_exists?(:stardust_rails_reports) 
       create_table :stardust_rails_reports do |t|

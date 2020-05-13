@@ -24,8 +24,11 @@ Stardust::GraphQL.define_mutation :stardust_rails_reports_update do
 
   def self.authorized?(_, ctx)
     current_user = ctx[:current_user]
-    current_user.present? && current_user.role == "sys_admin"
+    current_user.present? && permitted_roles.include?(current_user.role)
   end
 
+  def self.permitted_roles
+    StardustRails::Reports.configuration.manager_roles
+  end
 
 end

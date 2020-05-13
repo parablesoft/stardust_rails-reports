@@ -1,4 +1,3 @@
-require "stardust_rails/reports/dsl"
 class StardustRails::Reports::Report < ActiveRecord::Base
 
   self.table_name = "stardust_rails_reports"
