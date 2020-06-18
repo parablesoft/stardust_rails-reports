@@ -9,6 +9,11 @@ module StardustRails
           self
         end
 
+        def with_variables(variables)
+          @variables = variables
+          self
+        end
+
         def variable(value=nil)
           if value.present?
             @variable = value
@@ -57,7 +62,8 @@ module StardustRails
 
         private
 
-        attr_reader :user
+        attr_reader :user,
+          :variables
 
       end
     end

@@ -24,6 +24,7 @@ module StardustRails
           @fields = []
         end
 
+
         def fields
           @fields.select do |field|
             return true if field.visible.nil?
@@ -58,7 +59,11 @@ module StardustRails
 
         def filter(&block)
           if block_given?
-            filter = StardustRails::Reports::Dsl::Filter.new.with_user(user)
+            filter = StardustRails::Reports::Dsl::Filter
+              .new
+              .with_user(user)
+              .with_variables(variables)
+
             filter.instance_eval(&block)
             @filters << filter
             filter
