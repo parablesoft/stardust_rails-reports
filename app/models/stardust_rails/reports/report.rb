@@ -44,6 +44,10 @@ class StardustRails::Reports::Report < ActiveRecord::Base
       name
   end
 
+  def default_sort
+    dsl.report.default_sort 
+  end
+
   def filters
     @filters ||= filters_with_list_data
   end

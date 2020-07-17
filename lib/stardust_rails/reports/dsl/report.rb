@@ -25,6 +25,16 @@ module StardustRails
         end
 
 
+        def default_sort(value=[],&block)
+          if block_given?
+            @default_sort = block
+          elsif value.present?
+            @default_sort = value
+          else
+            @default_sort
+          end
+        end
+
         def fields
           @fields.select do |field|
             return true if field.visible.nil?
