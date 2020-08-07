@@ -23,6 +23,12 @@ module StardustRails
           end
         end
 
+        def field_names
+          output = [name]
+          output << link_text_field unless link_text_field.nil?
+          output
+        end
+
         def type(value=nil)
           if value.present?
             @type=value
@@ -36,6 +42,22 @@ module StardustRails
             @link = value
           else
             @link
+          end
+        end
+
+        def link_text_field(value=nil)
+          if value.present?
+            @link_text_field = value
+          else
+            @link_text_field
+          end
+        end
+
+        def target(value=nil)
+          if value.present?
+            @target = value
+          else
+            @target
           end
         end
 

@@ -84,7 +84,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def field_names
-    @field_names ||= fields.map &:name
+    @field_names ||= fields.map(&:field_names).flatten.uniq
   end
 
   def data
