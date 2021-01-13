@@ -15,6 +15,11 @@ module StardustRails
           self
         end
 
+        def with_variables(variables)
+          @variables = variables
+          self
+        end
+
         def header(value=nil)
           if value.present?
             @header = value
@@ -76,7 +81,8 @@ module StardustRails
 
         private
 
-        attr_reader :user
+        attr_reader :user,
+          :variables
 
       end
     end

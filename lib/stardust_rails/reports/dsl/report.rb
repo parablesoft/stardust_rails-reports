@@ -60,7 +60,10 @@ module StardustRails
 
         def field(name=nil,&block)
           if block_given?
-            field = StardustRails::Reports::Dsl::Field.new(name).with_user(user)
+            field = StardustRails::Reports::Dsl::Field.new(name)
+              .with_variables(variables)
+              .with_user(user)
+
             field.instance_eval(&block)
             @fields << field 
             field
