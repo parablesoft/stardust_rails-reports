@@ -16,9 +16,10 @@ module StardustRails
         )
 
         end
+
         [
-          dates.first.beginning_of_day.in_time_zone(EST_ZONE_NAME),
-          dates.last.end_of_day.in_time_zone(EST_ZONE_NAME)
+          dates.first.in_time_zone(EST_ZONE_NAME).beginning_of_day,
+          dates.last.in_time_zone(EST_ZONE_NAME).end_of_day
         ]
       end
 
