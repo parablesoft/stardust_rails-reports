@@ -4,10 +4,12 @@ module StardustRails
       class Field
 
 
-        attr_reader :name
+        attr_reader :name,
+          :footers
 
         def initialize(value)
           @name = value
+          @footers = []
         end
 
         def with_user(user)
@@ -39,6 +41,19 @@ module StardustRails
             @type=value
           else
             @type
+          end
+        end
+
+        def footer(&block)
+          if block_given?
+
+            footer = StardustRails::Reports::Dsl::Field::Footer.new
+              .with_variables(variables)
+              .with_user(user)
+
+            footer.instance_eval(&block)
+            footers << footer
+            footer
           end
         end
 
