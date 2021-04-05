@@ -5,8 +5,17 @@ Stardust::GraphQL.define_query :stardust_rails_reports_list do
   null false
 
 
-  def resolve
-    StardustRails::Reports::Report.available_reports(user: current_user)
+  argument :keyword,
+    :string,
+    required: false
+
+  def resolve(keyword: nil)
+    unless keyword
+      StardustRails::Reports::Report.available_reports(user: current_user)
+    else
+      StardustRails::Reports::Report.available_reports(user: current_user)
+        .select {|r| r.configuration.include?(keyword)}
+    end
   end
 
   private
