@@ -13,7 +13,7 @@ Stardust::GraphQL.define_mutation :stardust_rails_reports_update do
   field :error, :raw, null: true
 
   def resolve(report:,attributes:)
-    report.update_attributes(attributes.to_h)
+    report.update(attributes.to_h)
     { 
      report: report
     }
