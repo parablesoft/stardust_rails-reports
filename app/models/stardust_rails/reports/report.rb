@@ -56,6 +56,14 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     @fields ||= dsl.report.fields
   end
 
+  def sql
+    if dsl.report.sql
+      dsl.report.sql.call
+    else
+      query_results&.to_sql&.strip
+    end
+  end
+
   private
 
   attr_reader :user,
@@ -99,9 +107,6 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     query.call
   end
 
-  def sql
-    dsl.report.sql.call
-  end
 
   def sql_results
     ActiveRecord::Base.connection.exec_query(sql)

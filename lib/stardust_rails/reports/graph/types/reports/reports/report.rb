@@ -9,6 +9,7 @@ Stardust::GraphQL.define_types do
     field :header, :string, null: false
     field :configuration, :string, null: true
     field :default_sort, [:string], null: true
+    field :sql, :string, null: false
   end
 
   input_object :report_update_attributes do
