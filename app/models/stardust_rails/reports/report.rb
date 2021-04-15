@@ -96,7 +96,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def data
-    query ? query_results : sql_results
+      query ? query_results : sql_results
   end
 
   def query
@@ -109,7 +109,15 @@ class StardustRails::Reports::Report < ActiveRecord::Base
 
 
   def sql_results
-    ActiveRecord::Base.connection.exec_query(sql)
+    begin
+      ActiveRecord::Base.transaction do
+        ActiveRecord::Base.connection.exec_query(sql)
+      end
+    rescue ActiveRecord::StatementInvalid => e
+      Rails.logger.debug e.message
+      ActiveRecord::Base.connection.reconnect!
+      return []
+    end
   end
 
   def dsl
