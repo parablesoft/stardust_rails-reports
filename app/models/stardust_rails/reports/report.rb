@@ -57,10 +57,15 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def sql
-    if dsl.report.sql
-      dsl.report.sql.call
-    else
-      query_results&.to_sql&.strip
+    begin
+      if dsl.report.sql
+        dsl.report.sql.call
+      else
+        query_results&.to_sql&.strip
+      end
+    rescue
+      puts "Cannot generate SQL"
+      return ""
     end
   end
 
@@ -96,7 +101,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def data
-      query ? query_results : sql_results
+    query ? query_results : sql_results
   end
 
   def query
