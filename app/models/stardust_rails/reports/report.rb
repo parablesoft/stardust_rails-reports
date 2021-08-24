@@ -1,5 +1,4 @@
 class StardustRails::Reports::Report < ActiveRecord::Base
-
   self.table_name = "stardust_rails_reports"
 
   def self.available_reports(user:)
@@ -16,9 +15,9 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     end
   end
 
-  def self.load(id:, user:,variables: nil)
+  def self.load(id:, user:, variables: nil)
     report = StardustRails::Reports::Report.find(id).with_user(user)
-    report.with_variables(variables || {}) 
+    report.with_variables(variables || {})
     report
   end
 
@@ -39,13 +38,17 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def header
-    dsl.report.header ? 
+    dsl.report.header ?
       dsl_report_header :
       name
   end
 
+  def chart
+    dsl.report.chart 
+  end
+
   def default_sort
-    dsl.report.default_sort 
+    dsl.report.default_sort
   end
 
   def filters
@@ -75,10 +78,9 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     :variables
 
   def dsl_report_header
-    dsl.report.header.is_a?(String) ? 
+    dsl.report.header.is_a?(String) ?
       dsl.report.header :
       dsl.report.header.call
-
   end
 
   def filters_with_list_data
@@ -87,7 +89,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
         label: filter.label,
         component: filter.component,
         variable: filter.variable,
-        list_data: filter.list_data ? filter.list_data.call : nil
+        list_data: filter.list_data ? filter.list_data.call : nil,
       }
     end
   end
@@ -112,7 +114,6 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     query.call
   end
 
-
   def sql_results
     begin
       ActiveRecord::Base.transaction do
@@ -136,7 +137,4 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     output.instance_eval(configuration)
     output
   end
-
-
 end
-

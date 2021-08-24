@@ -1,5 +1,6 @@
 require_relative "filter"
 require_relative "field"
+require_relative "chart"
 
 module StardustRails
   module Reports
@@ -22,6 +23,16 @@ module StardustRails
         def initialize
           @filters = []
           @fields = []
+        end
+
+        def chart(&block)
+          if block_given?
+            chart = StardustRails::Reports::Dsl::Chart.new
+            chart.instance_eval(&block)
+            @chart = chart
+          else
+            @chart
+          end
         end
 
 
