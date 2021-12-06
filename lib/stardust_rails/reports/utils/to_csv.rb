@@ -18,7 +18,7 @@ class StardustRails::Reports::Utils::ToCsv
   private
 
   def rows
-    report.records.map &:values
+    report.records(display: true).map &:values
   end
 
   def headers
