@@ -33,10 +33,13 @@ class StardustRails::Reports::Report < ActiveRecord::Base
 
   def records(display: false)
     data.map do |record|
-      record.slice(*(display ? field_names_for_display :  field_names))
+      output = record.slice(*(display ? field_names_for_display : field_names))
+
+      puts output
+
+      output
     end
   end
-
 
   def header
     dsl.report.header ?
@@ -45,7 +48,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def chart
-    dsl.report.chart 
+    dsl.report.chart
   end
 
   def default_sort
@@ -104,8 +107,9 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def field_names_for_display
-    @field_names_for_display ||= fields.reduce([]) do |accu,field|
-      accu << field.link_text_field || field.name
+    @field_names_for_display ||= fields.reduce([]) do |accu, field|
+      field_name = field.link_text_field || field.name
+      accu << field_name
       accu
     end.flatten.uniq
   end
