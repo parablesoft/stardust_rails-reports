@@ -33,11 +33,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
 
   def records(display: false)
     data.map do |record|
-      output = record.slice(*(display ? field_names_for_display : field_names))
-
-      puts output
-
-      output
+      record.slice(*(display ? field_names_for_display : field_names))
     end
   end
 
