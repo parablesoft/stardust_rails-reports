@@ -31,9 +31,9 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     self
   end
 
-  def records
+  def records(display: false)
     data.map do |record|
-      record.slice(*field_names)
+      record.slice(*(display ? field_names_for_display : field_names))
     end
   end
 
@@ -44,7 +44,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def chart
-    dsl.report.chart 
+    dsl.report.chart
   end
 
   def default_sort
@@ -100,6 +100,14 @@ class StardustRails::Reports::Report < ActiveRecord::Base
 
   def field_names
     @field_names ||= fields.map(&:field_names).flatten.uniq
+  end
+
+  def field_names_for_display
+    @field_names_for_display ||= fields.reduce([]) do |accu, field|
+      field_name = field.link_text_field || field.name
+      accu << field_name
+      accu
+    end.flatten.uniq
   end
 
   def data

@@ -6,7 +6,6 @@ module StardustRails
   module Reports
     class Dsl
       class Report
-
         include Helpers
         attr_reader :filters
 
@@ -35,8 +34,7 @@ module StardustRails
           end
         end
 
-
-        def default_sort(value=[],&block)
+        def default_sort(value = [], &block)
           if block_given?
             @default_sort = block
           elsif value.present?
@@ -69,14 +67,14 @@ module StardustRails
           end
         end
 
-        def field(name=nil,&block)
+        def field(name = nil, &block)
           if block_given?
             field = StardustRails::Reports::Dsl::Field.new(name)
               .with_variables(variables)
               .with_user(user)
 
             field.instance_eval(&block)
-            @fields << field 
+            @fields << field
             field
           end
         end
@@ -102,7 +100,7 @@ module StardustRails
           end
         end
 
-        def header(value=nil,&block)
+        def header(value = nil, &block)
           if block_given?
             @header = block
           elsif value.present?
@@ -130,16 +128,11 @@ module StardustRails
           end
         end
 
-
         private
 
         attr_reader :user,
           :variables
-
       end
     end
   end
 end
-
-
-
