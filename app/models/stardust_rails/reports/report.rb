@@ -7,7 +7,12 @@ class StardustRails::Reports::Report < ActiveRecord::Base
         report.with_user(user)
         dsl = StardustRails::Reports::Dsl.new.with_user(user)
         dsl.instance_eval(report.configuration)
-        dsl.report.visible
+
+        if dsl.report.visible.is_a?(Proc)
+          dsl.report.visible.call
+        else
+          dsl.report.visible
+        end
       rescue => error
         puts error.message
         false
