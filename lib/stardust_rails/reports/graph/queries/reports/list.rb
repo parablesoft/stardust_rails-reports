@@ -9,13 +9,19 @@ Stardust::GraphQL.define_query :stardust_rails_reports_list do
     :string,
     required: false
 
-  def resolve(keyword: nil)
-    unless keyword
-      StardustRails::Reports::Report.available_reports(user: current_user)
-    else
-      StardustRails::Reports::Report.available_reports(user: current_user)
+  argument :group,
+    :string,
+    required: false
+
+  def resolve(keyword: nil, group: nil)
+    query = StardustRails::Reports::Report.available_reports(user: current_user, group: group)
+    
+    if keyword
+      query = query
         .select {|r| r.configuration.include?(keyword)}
     end
+
+    query
   end
 
   private

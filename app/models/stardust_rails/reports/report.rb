@@ -1,8 +1,11 @@
 class StardustRails::Reports::Report < ActiveRecord::Base
   self.table_name = "stardust_rails_reports"
 
-  def self.available_reports(user:)
-    StardustRails::Reports::Report.all.select do |report|
+  def self.available_reports(user:, group: nil)
+    scope = StardustRails::Reports::Report
+
+    scope = group.nil? ? scope.all : scope.where(group: group)
+    scope.select do |report|
       begin
         report.with_user(user)
         dsl = StardustRails::Reports::Dsl.new.with_user(user)
