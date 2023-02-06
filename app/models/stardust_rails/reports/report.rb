@@ -40,7 +40,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def records(display: false)
-    key = dsl.report.supplemental_data.key
+    key = dsl.report.supplemental_data&.key
     data.map do |record|
       output = record.slice(*(display ? field_names_for_display : field_names))
 
