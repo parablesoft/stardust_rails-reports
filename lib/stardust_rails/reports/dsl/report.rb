@@ -1,6 +1,7 @@
 require_relative "filter"
 require_relative "field"
 require_relative "chart"
+require_relative "supplemental_data"
 
 module StardustRails
   module Reports
@@ -97,6 +98,18 @@ module StardustRails
             @query = block
           else
             @query
+          end
+        end
+
+        def supplemental_data(key = "", &block)
+          key = "id" if key.blank?
+
+          if block_given?
+            data = StardustRails::Reports::Dsl::SupplementalData.new(key)
+            data.instance_eval(&block)
+            @supplemental_data = data
+          else
+            @supplemental_data
           end
         end
 

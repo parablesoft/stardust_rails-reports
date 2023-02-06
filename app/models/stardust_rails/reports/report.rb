@@ -40,8 +40,15 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   end
 
   def records(display: false)
+    key = dsl.report.supplemental_data.key
     data.map do |record|
-      record.slice(*(display ? field_names_for_display : field_names))
+      output = record.slice(*(display ? field_names_for_display : field_names))
+
+      if key && supplemental_data
+        match = supplemental_data.find { |sdr| sdr[key] == output[key] }
+        output.merge!(match.reject { |k, v| k == key }) if match
+      end
+      output
     end
   end
 
@@ -80,6 +87,14 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     end
   end
 
+  def supplemental_data
+    @supplemental_data ||= if dsl.report.supplemental_data.query
+        instance_exec(ids, &dsl.report.supplemental_data.query)
+      else
+        nil
+      end
+  end
+
   private
 
   attr_reader :user,
@@ -116,6 +131,12 @@ class StardustRails::Reports::Report < ActiveRecord::Base
       accu << field_name
       accu
     end.flatten.uniq
+  end
+
+  def ids
+    key = dsl.report.supplemental_data.key
+    return nil unless key.present?
+    @ids ||= data.map { |r| r[key] }
   end
 
   def data
