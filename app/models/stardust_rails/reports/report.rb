@@ -58,6 +58,10 @@ class StardustRails::Reports::Report < ActiveRecord::Base
       name
   end
 
+  def background_download
+    dsl.background_download
+  end
+
   def chart
     dsl.report.chart
   end

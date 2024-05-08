@@ -123,6 +123,14 @@ module StardustRails
           end
         end
 
+        def background_download(value = nil)
+          if background_download.present?
+            @background_download = value
+          else
+            @background_download = false
+          end
+        end
+
         def sql(&block)
           if block_given?
             @sql = block
