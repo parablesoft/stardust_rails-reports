@@ -12,6 +12,7 @@ Stardust::GraphQL.define_types do
     field :default_sort, [:string], null: true
     field :sql, :string, null: false
     field :chart, :report_chart, null: true
+    field :background_download, :boolean, null: false
   end
 
   input_object :report_update_attributes do
@@ -19,5 +20,4 @@ Stardust::GraphQL.define_types do
     argument :name, :string, required: true
     argument :configuration, :string, required: true
   end
-
 end
