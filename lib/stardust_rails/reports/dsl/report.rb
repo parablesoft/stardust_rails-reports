@@ -53,6 +53,9 @@ module StardustRails
             else
               field.visible
             end
+          end.map do |field|
+            field.show_totals.() if field.show_totals.is_a?(Proc)
+            field
           end
         end
 

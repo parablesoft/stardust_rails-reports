@@ -40,12 +40,12 @@ module StardustRails
           end
         end
 
-        def show_totals(value = nil)
+        def show_totals(value = nil, &block)
           if block_given?
             @show_totals = block
           elsif value.present?
             @show_totals = value
-          elsif @show_totals
+          elsif @show_totals.present?
             @show_totals
           else
             true
