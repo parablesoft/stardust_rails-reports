@@ -54,7 +54,10 @@ module StardustRails
               field.visible
             end
           end.map do |field|
-            field.show_totals.() if field.show_totals.is_a?(Proc)
+            if field.show_totals.is_a?(Proc)
+              value = field.show_totals.call
+              field.show_totals(value)
+            end
             field
           end
         end

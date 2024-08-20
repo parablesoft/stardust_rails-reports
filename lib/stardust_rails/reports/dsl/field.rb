@@ -43,9 +43,9 @@ module StardustRails
         def show_totals(value = nil, &block)
           if block_given?
             @show_totals = block
-          elsif value.present?
+          elsif !value.nil?
             @show_totals = value
-          elsif @show_totals.present?
+          elsif !@show_totals.nil?
             @show_totals
           else
             true
