@@ -7,9 +7,6 @@ Stardust::GraphQL.define_types do
     field :link, :string, null: true
     field :link_text_field, :string, null: true
     field :target, :string, null: true
+    field :show_totals, :boolean, null: false
   end
-
-
 end
-
-

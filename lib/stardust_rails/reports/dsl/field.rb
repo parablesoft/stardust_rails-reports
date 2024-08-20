@@ -2,8 +2,6 @@ module StardustRails
   module Reports
     class Dsl
       class Field
-
-
         attr_reader :name
 
         def initialize(value)
@@ -20,7 +18,7 @@ module StardustRails
           self
         end
 
-        def header(value=nil)
+        def header(value = nil)
           if value.present?
             @header = value
           else
@@ -34,15 +32,25 @@ module StardustRails
           output
         end
 
-        def type(value=nil)
+        def type(value = nil)
           if value.present?
-            @type=value
+            @type = value
           else
             @type
           end
         end
 
-        def link(value=nil)
+        def show_totals(value = nil)
+          if block_given?
+            @show_totals = block
+          elsif value.present?
+            @show_totals = value
+          else
+            true
+          end
+        end
+
+        def link(value = nil)
           if value.present?
             @link = value
           else
@@ -50,7 +58,7 @@ module StardustRails
           end
         end
 
-        def link_text_field(value=nil)
+        def link_text_field(value = nil)
           if value.present?
             @link_text_field = value
           else
@@ -58,7 +66,7 @@ module StardustRails
           end
         end
 
-        def target(value=nil)
+        def target(value = nil)
           if value.present?
             @target = value
           else
@@ -78,12 +86,10 @@ module StardustRails
           end
         end
 
-
         private
 
         attr_reader :user,
           :variables
-
       end
     end
   end
