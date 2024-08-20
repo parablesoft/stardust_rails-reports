@@ -45,6 +45,8 @@ module StardustRails
             @show_totals = block
           elsif value.present?
             @show_totals = value
+          elsif @show_totals
+            @show_totals
           else
             true
           end
