@@ -1,9 +1,7 @@
 Stardust::GraphQL.define_query :stardust_rails_reports_list do
-
   description ""
   type [:report]
   null false
-
 
   argument :keyword,
     :string,
@@ -13,12 +11,16 @@ Stardust::GraphQL.define_query :stardust_rails_reports_list do
     :string,
     required: false
 
-  def resolve(keyword: nil, group: nil)
-    query = StardustRails::Reports::Report.available_reports(user: current_user, group: group)
-    
+  argument :tags,
+           :string,
+           required: false
+
+  def resolve(keyword: nil, group: nil, tags: nil)
+    query = StardustRails::Reports::Report.available_reports(user: current_user, group: group, tags: tags)
+
     if keyword
       query = query
-        .select {|r| r.configuration.include?(keyword)}
+        .select { |r| r.configuration.include?(keyword) }
     end
 
     query

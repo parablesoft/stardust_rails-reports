@@ -1,10 +1,13 @@
 class StardustRails::Reports::Report < ActiveRecord::Base
   self.table_name = "stardust_rails_reports"
 
-  def self.available_reports(user:, group: nil)
+  def self.available_reports(user:, group: nil, tags: nil)
     scope = StardustRails::Reports::Report
 
     scope = group.nil? ? scope.all : scope.where(group: group)
+
+    scope = tags.nil? ? scope : scope.where("array[?] && tags", tags)
+
     scope.select do |report|
       begin
         report.with_user(user)
