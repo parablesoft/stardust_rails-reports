@@ -13,11 +13,13 @@ Stardust::GraphQL.define_types do
     field :sql, :string, null: false
     field :chart, :report_chart, null: true
     field :background_download, :boolean, null: false
+    field :tags, [:string], null: true
   end
 
   input_object :report_update_attributes do
     argument :group, :string, required: false
-    argument :name, :string, required: true
-    argument :configuration, :string, required: true
+    argument :name, :string, required: false
+    argument :configuration, :string, required: false
+    argument :tags, [:string], required: false
   end
 end
