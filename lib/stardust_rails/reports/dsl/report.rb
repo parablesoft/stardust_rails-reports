@@ -2,6 +2,7 @@ require_relative "filter"
 require_relative "field"
 require_relative "chart"
 require_relative "supplemental_data"
+require_relative "data_dump"
 
 module StardustRails
   module Reports
@@ -9,6 +10,16 @@ module StardustRails
       class Report
         include Helpers
         attr_reader :filters
+
+        def data_dump(&block)
+          if block_given?
+            data_dump = StardustRails::Reports::Dsl::DataDump.new
+            data_dump.instance_eval(&block)
+            @data_dump = data_dump
+          else
+            @data_dump
+          end
+        end
 
         def with_user(user)
           @user = user
@@ -130,7 +141,7 @@ module StardustRails
         end
 
         def background_download(value = nil)
-          if background_download.present?
+          if value.present?
             @background_download = value
           else
             @background_download = false
