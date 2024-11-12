@@ -21,6 +21,16 @@ module StardustRails
             @schedule_for
           end
         end
+
+        def schedule_on(value = nil, &block)
+          if block_given?
+            @schedule_on = block
+          elsif value.present?
+            @schedule_on = value
+          else
+            @schedule_on
+          end
+        end
       end
     end
   end

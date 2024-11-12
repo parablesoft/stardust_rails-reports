@@ -26,6 +26,10 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     end
   end
 
+  def to_csv
+    StardustRails::Reports::Utils::ToCsv.new(self.id, user, nil).()
+  end
+
   def self.load(id:, user:, variables: nil)
     report = StardustRails::Reports::Report.find(id).with_user(user)
     report.with_variables(variables || {})
