@@ -1,7 +1,7 @@
 module StardustRails
   module Reports
     module Helpers
-      def dates_from_variables(variables, variable_name, default_dates = nil)
+      def dates_from_variables(variables, variable_name, default_dates = nil, no_default: false)
         lookup_value = variables[variable_name].to_s.underscore.gsub(/([\s.'_,])\1+/, "_")
 
         if lookup_value.downcase == "custom"
@@ -12,7 +12,7 @@ module StardustRails
         else
           dates = date_ranges.fetch(
             lookup_value,
-            default_dates || [nil, nil]
+            default_dates || month_to_date_default(no_default)
           )
         end
 
@@ -26,11 +26,15 @@ module StardustRails
 
       EST_ZONE_NAME = "Eastern Time (US & Canada)"
 
-      def month_to_date_default
-        [
-          now.beginning_of_month,
-          now.end_of_month,
-        ]
+      def month_to_date_default(no_default)
+        if no_default
+          [nil, nil]
+        else
+          [
+            now.beginning_of_month,
+            now.end_of_month,
+          ]
+        end
       end
 
       def now
