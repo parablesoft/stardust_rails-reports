@@ -2,7 +2,13 @@ module StardustRails
   module Reports
     class Dsl
       class Filter
-
+        def default_value(value = nil)
+          if value.present?
+            @default_value = value
+          else
+            @default_value
+          end
+        end
 
         def with_user(user)
           @user = user
@@ -14,7 +20,7 @@ module StardustRails
           self
         end
 
-        def variable(value=nil)
+        def variable(value = nil)
           if value.present?
             @variable = value
           else
@@ -22,15 +28,15 @@ module StardustRails
           end
         end
 
-        def label(value=nil)
+        def label(value = nil)
           if value.present?
-            @label=value
+            @label = value
           else
             @label
           end
         end
 
-        def component(value=nil)
+        def component(value = nil)
           if value.present?
             @component = value
           else
@@ -46,7 +52,6 @@ module StardustRails
           end
         end
 
-
         def visible(proc = nil, &block)
           if block_given?
             @visible = block
@@ -59,12 +64,10 @@ module StardustRails
           end
         end
 
-
         private
 
         attr_reader :user,
           :variables
-
       end
     end
   end

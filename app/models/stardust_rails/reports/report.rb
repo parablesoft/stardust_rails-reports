@@ -33,6 +33,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
   def self.load(id:, user:, variables: nil)
     report = StardustRails::Reports::Report.find(id).with_user(user)
     report.with_variables(variables || {})
+    # report.apply_default_variables
     report
   end
 
@@ -40,6 +41,28 @@ class StardustRails::Reports::Report < ActiveRecord::Base
     @variables = variables
     self
   end
+
+  # def apply_default_variables
+  #   @variables.merge!(filters_with_defaults_to_apply)
+  #   self
+  # end
+
+  # def filters_with_defaults_to_apply
+  #   current_variables = variables.keys
+  #   filters_with_defaults.select do |filter|
+  #     !filter[:variable_name].in?(current_variables)
+  #   end.reduce({}) do |accu, item|
+  #     accu.merge!(
+  #       item[:variable_name] => item[:default_value],
+  #     )
+  #   end
+  # end
+
+  # def filters_with_defaults
+  #   filters.select do |filter|
+  #     filter[:default_value].present?
+  #   end
+  # end
 
   def with_user(user)
     @user = user
@@ -128,6 +151,7 @@ class StardustRails::Reports::Report < ActiveRecord::Base
         component: filter.component,
         variable: filter.variable,
         list_data: filter.list_data ? filter.list_data.call : nil,
+        default_value: filter.default_value,
       }
     end
   end

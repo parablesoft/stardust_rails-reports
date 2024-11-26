@@ -2,7 +2,7 @@ module StardustRails
   module Reports
     module Helpers
       def dates_from_variables(variables, variable_name, default_dates = nil, no_default: false)
-        lookup_value = variables[variable_name].to_s.underscore.gsub(/([\s.'_,])\1+/, "_")
+        lookup_value = fetch_lookup_value(variables, variable_name) #variables[variable_name].to_s.underscore.gsub(/([\s.'_,])\1+/, "_")
 
         if lookup_value.downcase == "custom"
           dates = [
@@ -16,15 +16,37 @@ module StardustRails
           )
         end
 
-        [
-          dates.first.beginning_of_day,
-          dates.last.end_of_day,
-        ]
+        if dates == [nil, nil]
+          dates
+        else
+          [
+            dates.first.beginning_of_day,
+            dates.last.end_of_day,
+          ]
+        end
       end
 
       private
 
       EST_ZONE_NAME = "Eastern Time (US & Canada)"
+
+      def fetch_lookup_value(variables, variable_name)
+        lookup_value = variables[variable_name]
+        if lookup_value.blank?
+          default_filter = filters_with_defaults.find { |filter| filter.variable == variable_name }
+          lookup_value = default_filter&.default_value
+        end
+        lookup_value.to_s.underscore.gsub(/([\s.'_,])\1+/, "_").gsub(" ", "_")
+      end
+
+      def filters_with_defaults
+        filters.select do |filter|
+          filter.default_value.present?
+        end.map do |filter|
+          filter.variable(filter.variable.underscore.to_sym)
+          filter
+        end
+      end
 
       def month_to_date_default(no_default)
         if no_default
