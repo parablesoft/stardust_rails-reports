@@ -40,10 +40,10 @@ module StardustRails
       end
 
       def filters_with_defaults
-        filters.select do |filter|
+        @filters_with_defaults ||= filters.select do |filter|
           filter.default_value.present?
         end.map do |filter|
-          filter.variable(filter.variable.underscore.to_sym)
+          filter.variable(filter.variable.to_s.underscore.to_sym)
           filter
         end
       end
