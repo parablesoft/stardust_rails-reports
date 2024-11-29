@@ -66,7 +66,7 @@ GEM
     erubi (1.11.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    google-protobuf (3.21.5)
+    google-protobuf (3.21.7)
     graphiql-rails (1.7.0)
       railties
       sprockets-rails
